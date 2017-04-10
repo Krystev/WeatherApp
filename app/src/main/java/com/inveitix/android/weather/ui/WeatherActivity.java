@@ -6,7 +6,7 @@ public class WeatherActivity extends BaseActivity {
 
     @Override
     protected void onViewCreated() {
-
+        setToolBarAndUpNavigation();
     }
 
     @Override

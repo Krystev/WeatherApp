@@ -21,10 +21,15 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void onViewCreated() {
+
         showProgress();
         PermissionsUtils permissionsUtils = new PermissionsUtils();
         permissionsUtils.checkPermissions(this);
 
+        setUpMap();
+    }
+
+    private void setUpMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -39,6 +44,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         hideProgress();
         this.map = googleMap;
+
     }
 
     private void hideProgress() {
