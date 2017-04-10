@@ -3,4 +3,5 @@
     <string name="google_maps_key">AIzaSyBBQV7qeWoThY94K8Eg3RSXRAibrB4XZd0</string>
     <string name="choose">Choose</string>
     <string name="x">X</string>
+    <string name="loading">Loading Map...</string>
 </resources>
