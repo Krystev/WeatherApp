@@ -4,6 +4,7 @@ import com.inveitix.android.weather.R;
 
 public class WeatherActivity extends BaseActivity {
 
+
     @Override
     protected void onViewCreated() {
         setToolBarAndUpNavigation();
