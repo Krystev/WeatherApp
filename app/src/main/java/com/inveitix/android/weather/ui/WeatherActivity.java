@@ -9,6 +9,8 @@ import com.inveitix.android.weather.data.models.WeatherResponse;
 import com.inveitix.android.weather.usecases.WeatherUsecase;
 import com.inveitix.android.weather.utils.ProgressUtils;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 
 public class WeatherActivity extends BaseActivity implements WeatherUsecase.ViewListener {
@@ -18,9 +20,7 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
     private ProgressUtils progressUtils;
 
     @BindView(R.id.txt_town) TextView txtTown;
-    @BindView(R.id.txt_min_temp) TextView txtMinTemp;
     @BindView(R.id.txt_current_temp) TextView txtCurrTemp;
-    @BindView(R.id.txt_max_temp) TextView txtMaxTemp;
     @BindView(R.id.txt_humidity) TextView txtHumidity;
     @BindView(R.id.txt_pressure) TextView txtPressure;
     @BindView(R.id.txt_wind_speed) TextView txtWindSpeed;
@@ -32,6 +32,7 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
     @Override
     protected void onViewCreated() {
+        setToolBarAndUpNavigation();
         this.usecase = new WeatherUsecase(this);
         this.progressUtils = new ProgressUtils();
 
@@ -59,11 +60,9 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
     @Override
     public void showWeather(WeatherResponse weather) {
         txtTown.setText(weather.getName());
-        txtCurrTemp.setText(String.format("Current: %1$,.0f°F", weather.getMain().getTemp()));
-        txtMinTemp.setText(String.format("Min: %1$,.0f°F", weather.getMain().getTempMin()));
-        txtMaxTemp.setText(String.format("Max: %1$,.0f°F", weather.getMain().getTempMax()));
+        txtCurrTemp.setText(String.format("%1$,.0f°C", weather.getMain().getTemp()));
         txtHumidity.setText(String.format("%1$,.0f%%", weather.getMain().getHumidity()));
-        txtPressure.setText(String.format("%1$,.0f bars", weather.getMain().getPressure()));
+        txtPressure.setText(String.format("%1$,.0f hPa", weather.getMain().getPressure()));
         txtWindSpeed.setText(String.format("%1$,.0f km/h", weather.getWind().getSpeed()));
         txtWindDirection.setText(String.format("%s", weather.getWind().getDirection()));
         txtWeatherType.setText(weather.getWeather().get(CURRENT_INDEX).getMain());

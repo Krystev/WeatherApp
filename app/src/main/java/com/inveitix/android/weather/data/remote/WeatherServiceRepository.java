@@ -60,6 +60,11 @@ public class WeatherServiceRepository implements WeatherRepository {
                     WeatherResponse weather = response.body();
                     weather.getWind().setDirection(
                             degToDirection.getDirectionByDeg(weather.getWind().getDeg()));
+                    Log.e(TAG, weather.getMain().getTemp() + " " + weather.getMain().getTempMin() + " "
+                    + weather.getMain().getTempMax());
+                    weather.getMain().setTemp(convertKelvinToCel(weather.getMain().getTemp()));
+                    weather.getMain().setTempMin(convertKelvinToCel(weather.getMain().getTempMin()));
+                    weather.getMain().setTempMax(convertKelvinToCel(weather.getMain().getTempMax()));
 
                     weatherReceivedListener.onWeatherReceived(response.body());
                 }
@@ -71,6 +76,10 @@ public class WeatherServiceRepository implements WeatherRepository {
             }
         });
 
+    }
+
+    private double convertKelvinToCel(double kel){
+        return kel - 273.15;
     }
 
     interface WeatherService {
