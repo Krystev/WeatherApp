@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.inveitix.android.weather.data.models.WeatherResponse;
 import com.inveitix.android.weather.repositories.WeatherRepository;
-import com.inveitix.android.weather.utils.DegreesToDirectionUtils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +24,9 @@ public class WeatherServiceRepository implements WeatherRepository {
     private static WeatherServiceRepository instance;
 
     private OnWeatherReceivedListener weatherReceivedListener;
-    private DegreesToDirectionUtils degToDirection;
 
     private WeatherServiceRepository() {
-        this.degToDirection = new DegreesToDirectionUtils();
+
     }
 
     public static WeatherServiceRepository getInstance() {
@@ -57,15 +55,6 @@ public class WeatherServiceRepository implements WeatherRepository {
             @Override
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 if (response.isSuccessful()) {
-                    WeatherResponse weather = response.body();
-                    weather.getWind().setDirection(
-                            degToDirection.getDirectionByDeg(weather.getWind().getDeg()));
-                    Log.e(TAG, weather.getMain().getTemp() + " " + weather.getMain().getTempMin() + " "
-                    + weather.getMain().getTempMax());
-                    weather.getMain().setTemp(convertKelvinToCel(weather.getMain().getTemp()));
-                    weather.getMain().setTempMin(convertKelvinToCel(weather.getMain().getTempMin()));
-                    weather.getMain().setTempMax(convertKelvinToCel(weather.getMain().getTempMax()));
-
                     weatherReceivedListener.onWeatherReceived(response.body());
                 }
             }
@@ -76,10 +65,6 @@ public class WeatherServiceRepository implements WeatherRepository {
             }
         });
 
-    }
-
-    private double convertKelvinToCel(double kel){
-        return kel - 273.15;
     }
 
     interface WeatherService {

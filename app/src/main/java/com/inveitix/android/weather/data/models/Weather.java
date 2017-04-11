@@ -17,6 +17,7 @@ public class Weather {
     @SerializedName("icon")
     @Expose
     private String icon;
+    private int formattedIcon;
 
     public int getId() {
         return id;
@@ -50,4 +51,11 @@ public class Weather {
         this.icon = icon;
     }
 
+    public void setFormattedIcon(int formattedIcon) {
+        this.formattedIcon = formattedIcon;
+    }
+
+    public int getFormattedIcon() {
+        return formattedIcon;
+    }
 }

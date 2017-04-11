@@ -1,6 +1,5 @@
 package com.inveitix.android.weather.ui;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
@@ -8,8 +7,6 @@ import com.inveitix.android.weather.R;
 import com.inveitix.android.weather.data.models.WeatherResponse;
 import com.inveitix.android.weather.usecases.WeatherUsecase;
 import com.inveitix.android.weather.utils.ProgressUtils;
-
-import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -59,6 +56,9 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
     @Override
     public void showWeather(WeatherResponse weather) {
+
+        weatherIconView.setIconResource(
+                getString(weather.getWeather().get(CURRENT_INDEX).getFormattedIcon()));
         txtTown.setText(weather.getName());
         txtCurrTemp.setText(String.format("%1$,.0f°C", weather.getMain().getTemp()));
         txtHumidity.setText(String.format("%1$,.0f%%", weather.getMain().getHumidity()));
