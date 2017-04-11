@@ -33,7 +33,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.inveitix.android.weather.ui.WeatherActivity"></activity>
+        <activity android:name="com.inveitix.android.weather.ui.WeatherActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

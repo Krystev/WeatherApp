@@ -14,7 +14,6 @@ public class ProgressUtils {
         dialog.setMessage(context.getString(R.string.loading));
         dialog.setIndeterminate(true);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
         dialog.show();
     }
 

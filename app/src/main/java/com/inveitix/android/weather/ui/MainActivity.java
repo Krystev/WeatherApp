@@ -8,12 +8,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.inveitix.android.weather.R;
-import com.inveitix.android.weather.constants.IntentConstants;
 import com.inveitix.android.weather.utils.PermissionsUtils;
 
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback {
+
+    public static final String LAT = "lat";
+    public static final String LON = "lon";
 
     private GoogleMap map;
 
@@ -49,8 +51,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private void showWeather() {
         Intent weatherIntent = new Intent(this, WeatherActivity.class);
-        weatherIntent.putExtra(IntentConstants.LAT, getLocationUnderX().latitude);
-        weatherIntent.putExtra(IntentConstants.LONG, getLocationUnderX().longitude);
+        weatherIntent.putExtra(LAT, getLocationUnderX().latitude);
+        weatherIntent.putExtra(LON, getLocationUnderX().longitude);
         startActivity(weatherIntent);
     }
 

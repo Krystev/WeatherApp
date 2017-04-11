@@ -4,4 +4,8 @@
     <string name="choose">Choose</string>
     <string name="x">X</string>
     <string name="loading">Loading Map...</string>
+    <string name="min">Min:</string>
+    <string name="current">Current:</string>
+    <string name="max">Max:</string>
+    <string name="description">Description:</string>
 </resources>
