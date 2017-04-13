@@ -9,16 +9,20 @@ import com.google.android.gms.maps.model.LatLng;
 
 import com.inveitix.android.weather.R;
 import com.inveitix.android.weather.di.AppComponent;
+import com.inveitix.android.weather.usecases.MapUsecase;
 import com.inveitix.android.weather.utils.PermissionsUtils;
+
+import javax.inject.Inject;
 
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity implements OnMapReadyCallback {
+public class MapActivity extends BaseActivity implements OnMapReadyCallback, MapUsecase.ViewListener {
 
     public static final String LAT = "lat";
     public static final String LON = "lon";
 
     private GoogleMap map;
+    @Inject MapUsecase usecase;
 
     @Override
     protected void doInject(AppComponent component) {
@@ -29,19 +33,25 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     protected void onViewCreated() {
         PermissionsUtils permissionsUtils = new PermissionsUtils(this);
         permissionsUtils.checkPermissions();
-
-        setUpMap();
+        usecase.setListener(this);
+        usecase.onUiReady();
     }
 
-    private void setUpMap() {
+    @Override
+    public void setUpMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     @Override
+    public void showWeather() {
+        openWeatherActivity();
+    }
+
+    @Override
     protected int getLayout() {
-        return R.layout.activity_main;
+        return R.layout.activity_map;
     }
 
     @Override
@@ -52,10 +62,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @OnClick(R.id.btn_choose)
     public void chooseLocation(){
-        showWeather();
+        usecase.showWeather();
     }
 
-    private void showWeather() {
+    private void openWeatherActivity() {
         Intent weatherIntent = new Intent(this, WeatherActivity.class);
         weatherIntent.putExtra(LAT, getLocationUnderX().latitude);
         weatherIntent.putExtra(LON, getLocationUnderX().longitude);
@@ -65,6 +75,4 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     public LatLng getLocationUnderX(){
         return map.getCameraPosition().target;
     }
-
-
 }

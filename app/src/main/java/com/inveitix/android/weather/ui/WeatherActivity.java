@@ -45,8 +45,8 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
         progressUtils = new ProgressUtils(this);
         setToolBarAndUpNavigation();
 
-        double lat = getIntent().getDoubleExtra(MainActivity.LAT, DEFAULT_VALUE);
-        double lon = getIntent().getDoubleExtra(MainActivity.LON, DEFAULT_VALUE);
+        double lat = getIntent().getDoubleExtra(MapActivity.LAT, DEFAULT_VALUE);
+        double lon = getIntent().getDoubleExtra(MapActivity.LON, DEFAULT_VALUE);
 
         usecase.onUiReady(lat, lon);
     }
