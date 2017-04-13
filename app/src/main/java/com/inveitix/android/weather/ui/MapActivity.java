@@ -31,8 +31,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     @Override
     protected void onViewCreated() {
-        PermissionsUtils permissionsUtils = new PermissionsUtils(this);
-        permissionsUtils.checkPermissions();
         usecase.setListener(this);
         usecase.onUiReady();
     }
@@ -47,6 +45,12 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     @Override
     public void showWeather() {
         openWeatherActivity();
+    }
+
+    @Override
+    public void checkPermissions() {
+        PermissionsUtils permissionsUtils = new PermissionsUtils(this);
+        permissionsUtils.checkPermissions();
     }
 
     @Override

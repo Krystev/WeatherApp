@@ -11,6 +11,7 @@ public class MapUsecase {
     }
 
     public void onUiReady() {
+        viewListener.checkPermissions();
         viewListener.setUpMap();
     }
 
@@ -25,5 +26,6 @@ public class MapUsecase {
     public interface ViewListener {
         void setUpMap();
         void showWeather();
+        void checkPermissions();
     }
 }

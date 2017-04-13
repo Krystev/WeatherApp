@@ -31,11 +31,11 @@ public class WeatherUsecase {
     }
 
     public void onUiReady(double lat, double lon) {
-        viewListener.showProgress();
         getCurrentWeather(lat, lon);
     }
 
     private void getCurrentWeather(double lat, double lon) {
+        viewListener.showProgress();
         weatherService.getCurrentWeather(getWeatherReceivedListener(), lat, lon);
     }
 

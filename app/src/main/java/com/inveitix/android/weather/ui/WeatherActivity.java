@@ -41,7 +41,6 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
     @Override
     protected void onViewCreated() {
         usecase.setListener(this);
-
         progressUtils = new ProgressUtils(this);
         setToolBarAndUpNavigation();
 

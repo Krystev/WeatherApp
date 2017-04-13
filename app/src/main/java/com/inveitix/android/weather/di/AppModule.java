@@ -17,25 +17,31 @@ import dagger.Provides;
 public class AppModule {
     private App app;
 
-    public AppModule(App app) { this.app = app; }
+    public AppModule(App app) {
+        this.app = app;
+    }
 
     @Provides
     @Singleton
-    public App provideApplication() { return app; }
+    App provideApplication() {
+        return app;
+    }
 
     @Provides
     @Singleton
-    public LayoutInflater provideLayoutInflater() { return LayoutInflater.from(app); }
+    LayoutInflater provideLayoutInflater() {
+        return LayoutInflater.from(app);
+    }
 
     @Provides
     @Singleton
-    public Executor provideExecutor() {
+    Executor provideExecutor() {
         return Executors.newCachedThreadPool();
     }
 
     @Provides
     @Singleton
-    public WeatherServiceRepository provideWeatherService () {
+    WeatherServiceRepository provideWeatherService() {
         return new WeatherServiceRepository();
     }
 }

@@ -5,11 +5,14 @@ import android.content.Context;
 
 import com.inveitix.android.weather.R;
 
+import javax.inject.Inject;
+
 public class ProgressUtils {
 
     private ProgressDialog dialog;
     private Context context;
 
+    @Inject
     public ProgressUtils(Context context) {
         this.context = context;
     }
