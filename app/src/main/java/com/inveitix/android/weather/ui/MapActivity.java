@@ -43,8 +43,8 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     }
 
     @Override
-    public void onLocationSelected() {
-        openWeatherActivity();
+    public void onLocationSelected(double lat, double lon) {
+        startActivity(getWeatherIntent(lat, lon));
     }
 
     @Override
@@ -65,14 +65,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     @OnClick(R.id.btn_choose)
     public void chooseLocation(){
-        usecase.showWeather();
+        usecase.showWeather(getLocationUnderX().latitude, getLocationUnderX().longitude);
     }
 
-    private void openWeatherActivity() {
+    private Intent getWeatherIntent(double latitude, double longitude) {
         Intent weatherIntent = new Intent(this, WeatherActivity.class);
-        weatherIntent.putExtra(LAT, getLocationUnderX().latitude);
-        weatherIntent.putExtra(LON, getLocationUnderX().longitude);
-        startActivity(weatherIntent);
+        weatherIntent.putExtra(LAT, latitude);
+        weatherIntent.putExtra(LON, longitude);
+        return weatherIntent;
     }
 
     public LatLng getLocationUnderX(){

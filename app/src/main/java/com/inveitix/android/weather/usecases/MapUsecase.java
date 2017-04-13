@@ -15,8 +15,8 @@ public class MapUsecase {
         viewListener.setUpMap();
     }
 
-    public void showWeather(){
-        viewListener.onLocationSelected();
+    public void showWeather(double latitude, double longitude){
+        viewListener.onLocationSelected(latitude, longitude);
     }
 
     public void setListener(ViewListener viewListener) {
@@ -25,7 +25,7 @@ public class MapUsecase {
 
     public interface ViewListener {
         void setUpMap();
-        void onLocationSelected();
+        void onLocationSelected(double latitude, double longitude);
         void checkPermissions();
     }
 }
