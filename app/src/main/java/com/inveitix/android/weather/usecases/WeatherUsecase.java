@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 public class WeatherUsecase {
 
+    private static final int CURRENT_INDEX = 0;
+
     private DegreesToDirectionUtils degToDirection;
     private ViewListener viewListener;
     private WeatherServiceRepository weatherService;
@@ -50,8 +52,9 @@ public class WeatherUsecase {
     }
 
     private void formatData(WeatherResponse weather) {
-        int formattedIcon = iconParser.getFormattedIcon(weather.getWeather().get(0).getIcon());
-        weather.getWeather().get(0).setFormattedIcon(formattedIcon);
+        int formattedIcon =
+                iconParser.getFormattedIcon(weather.getWeather().get(CURRENT_INDEX).getIcon());
+        weather.getWeather().get(CURRENT_INDEX).setFormattedIcon(formattedIcon);
         weather.getWind().setDirection(
                 degToDirection.getDirectionByDeg(weather.getWind().getDeg()));
         weather.getMain().setTemp(convertKelvinToCel(weather.getMain().getTemp()));
@@ -64,11 +67,8 @@ public class WeatherUsecase {
     }
 
     public interface ViewListener {
-
         void showProgress();
-
         void hideProgress();
-
         void showWeather(WeatherResponse weather);
     }
 }

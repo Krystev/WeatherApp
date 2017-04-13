@@ -23,9 +23,7 @@ public class MapUsecase {
     }
 
     public interface ViewListener {
-
         void setUpMap();
-
         void showWeather();
     }
 }
