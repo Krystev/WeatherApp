@@ -18,7 +18,7 @@ public class WeatherUsecase {
     private IconParser iconParser;
 
     @Inject
-    public WeatherUsecase(WeatherServiceRepository weatherService) {
+    WeatherUsecase(WeatherServiceRepository weatherService) {
         this.degToDirection = new DegreesToDirectionUtils();
         this.iconParser = new IconParser();
         this.weatherService = weatherService;

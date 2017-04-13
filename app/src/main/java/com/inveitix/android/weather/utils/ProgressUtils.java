@@ -3,6 +3,7 @@ package com.inveitix.android.weather.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.inveitix.android.weather.App;
 import com.inveitix.android.weather.R;
 
 import javax.inject.Inject;
@@ -12,7 +13,6 @@ public class ProgressUtils {
     private ProgressDialog dialog;
     private Context context;
 
-    @Inject
     public ProgressUtils(Context context) {
         this.context = context;
     }

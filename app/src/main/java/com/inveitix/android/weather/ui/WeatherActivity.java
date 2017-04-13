@@ -18,7 +18,7 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
     public static final int CURRENT_INDEX = 0;
 
     @Inject WeatherUsecase usecase;
-    private ProgressUtils progressUtils;
+    ProgressUtils progressUtils;
 
     @BindView(R.id.txt_town) TextView txtTown;
     @BindView(R.id.txt_current_temp) TextView txtCurrTemp;
@@ -40,8 +40,8 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
     protected void onViewCreated() {
         usecase.setListener(this);
 
+        progressUtils = new ProgressUtils(this);
         setToolBarAndUpNavigation();
-        this.progressUtils = new ProgressUtils();
 
         double lat = getIntent().getDoubleExtra(MainActivity.LAT, DEFAULT_VALUE);
         double lon = getIntent().getDoubleExtra(MainActivity.LON, DEFAULT_VALUE);
@@ -56,7 +56,7 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
     @Override
     public void showProgress() {
-        progressUtils.showProgress(this);
+        progressUtils.showProgress();
     }
 
     @Override

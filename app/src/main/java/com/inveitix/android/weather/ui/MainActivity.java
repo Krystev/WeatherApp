@@ -8,6 +8,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.inveitix.android.weather.R;
+import com.inveitix.android.weather.di.AppComponent;
 import com.inveitix.android.weather.utils.PermissionsUtils;
 
 import butterknife.OnClick;
@@ -18,6 +19,11 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     public static final String LON = "lon";
 
     private GoogleMap map;
+
+    @Override
+    protected void doInject(AppComponent component) {
+        component.inject(this);
+    }
 
     @Override
     protected void onViewCreated() {
