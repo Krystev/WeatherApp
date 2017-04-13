@@ -57,7 +57,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
-
     }
 
     @OnClick(R.id.btn_choose)
