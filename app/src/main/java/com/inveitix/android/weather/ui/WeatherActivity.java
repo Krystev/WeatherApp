@@ -1,5 +1,7 @@
 package com.inveitix.android.weather.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
@@ -18,6 +20,8 @@ import butterknife.BindView;
 public class WeatherActivity extends BaseActivity implements WeatherUsecase.ViewListener {
     public static final int DEFAULT_VALUE = 0;
     public static final int CURRENT_INDEX = 0;
+    public static final String LAT = "lat";
+    public static final String LON = "lon";
 
     @Inject WeatherUsecase usecase;
     ProgressUtils progressUtils;
@@ -44,8 +48,8 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
         progressUtils = new ProgressUtils(this);
         setToolBarAndUpNavigation();
 
-        double lat = getIntent().getDoubleExtra(MapActivity.LAT, DEFAULT_VALUE);
-        double lon = getIntent().getDoubleExtra(MapActivity.LON, DEFAULT_VALUE);
+        double lat = getIntent().getDoubleExtra(LAT, DEFAULT_VALUE);
+        double lon = getIntent().getDoubleExtra(LON, DEFAULT_VALUE);
 
         usecase.onUiReady(lat, lon);
     }
@@ -82,5 +86,12 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
         txtWindDirection.setText(weather.getWind().getDirection());
         txtWeatherType.setText(weather.getWeather().get(CURRENT_INDEX).getMain());
         txtWeatherDescription.setText(weather.getWeather().get(CURRENT_INDEX).getDescription());
+    }
+
+    public static Intent getIntent(Context context, double latitude, double longitude) {
+        Intent weatherIntent = new Intent(context, WeatherActivity.class);
+        weatherIntent.putExtra(LAT, latitude);
+        weatherIntent.putExtra(LON, longitude);
+        return weatherIntent;
     }
 }

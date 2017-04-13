@@ -1,7 +1,5 @@
 package com.inveitix.android.weather.ui;
 
-import android.content.Intent;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -17,9 +15,6 @@ import javax.inject.Inject;
 import butterknife.OnClick;
 
 public class MapActivity extends BaseActivity implements OnMapReadyCallback, MapUsecase.ViewListener {
-
-    public static final String LAT = "lat";
-    public static final String LON = "lon";
 
     private GoogleMap map;
     @Inject MapUsecase usecase;
@@ -44,7 +39,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     @Override
     public void onLocationSelected(double lat, double lon) {
-        startActivity(getWeatherIntent(lat, lon));
+        startActivity(WeatherActivity.getIntent(this,lat, lon));
     }
 
     @Override
@@ -66,13 +61,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     @OnClick(R.id.btn_choose)
     public void chooseLocation(){
         usecase.setLocation(getLocationUnderX().latitude, getLocationUnderX().longitude);
-    }
-
-    private Intent getWeatherIntent(double latitude, double longitude) {
-        Intent weatherIntent = new Intent(this, WeatherActivity.class);
-        weatherIntent.putExtra(LAT, latitude);
-        weatherIntent.putExtra(LON, longitude);
-        return weatherIntent;
     }
 
     public LatLng getLocationUnderX(){
