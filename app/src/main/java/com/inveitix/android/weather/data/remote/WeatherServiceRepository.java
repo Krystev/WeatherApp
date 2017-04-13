@@ -6,6 +6,8 @@ import android.util.Log;
 import com.inveitix.android.weather.data.models.WeatherResponse;
 import com.inveitix.android.weather.repositories.WeatherRepository;
 
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -14,6 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+@Singleton
 public class WeatherServiceRepository implements WeatherRepository {
 
     private static final String BASE_API_URL = "http://api.openweathermap.org/";
@@ -21,20 +24,8 @@ public class WeatherServiceRepository implements WeatherRepository {
             = "/data/2.5/weather?id=524901&APPID=813f06edb0e4232284759b7e87e4a265";
 
     private static String TAG = "WeatherServiceRepo";
-    private static WeatherServiceRepository instance;
 
     private OnWeatherReceivedListener weatherReceivedListener;
-
-    private WeatherServiceRepository() {
-
-    }
-
-    public static WeatherServiceRepository getInstance() {
-        if (instance == null) {
-            instance = new WeatherServiceRepository();
-        }
-        return instance;
-    }
 
     @Override
     public void getCurrentWeather(OnWeatherReceivedListener weatherReceivedListener,

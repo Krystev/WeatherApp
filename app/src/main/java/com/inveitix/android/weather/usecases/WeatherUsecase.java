@@ -8,6 +8,8 @@ import com.inveitix.android.weather.repositories.WeatherRepository;
 import com.inveitix.android.weather.utils.DegreesToDirectionUtils;
 import com.inveitix.android.weather.utils.IconParser;
 
+import javax.inject.Inject;
+
 public class WeatherUsecase {
 
     private DegreesToDirectionUtils degToDirection;
@@ -15,11 +17,15 @@ public class WeatherUsecase {
     private WeatherServiceRepository weatherService;
     private IconParser iconParser;
 
-    public WeatherUsecase(ViewListener viewListener) {
+    @Inject
+    public WeatherUsecase(WeatherServiceRepository weatherService) {
         this.degToDirection = new DegreesToDirectionUtils();
         this.iconParser = new IconParser();
+        this.weatherService = weatherService;
+    }
+
+    public void setListener(ViewListener viewListener) {
         this.viewListener = viewListener;
-        this.weatherService = WeatherServiceRepository.getInstance();
     }
 
     public void onUiReady(double lat, double lon) {

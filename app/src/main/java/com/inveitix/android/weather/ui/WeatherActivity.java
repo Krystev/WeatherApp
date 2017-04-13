@@ -5,15 +5,19 @@ import android.widget.TextView;
 import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.inveitix.android.weather.R;
 import com.inveitix.android.weather.data.models.WeatherResponse;
+import com.inveitix.android.weather.di.AppComponent;
 import com.inveitix.android.weather.usecases.WeatherUsecase;
 import com.inveitix.android.weather.utils.ProgressUtils;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class WeatherActivity extends BaseActivity implements WeatherUsecase.ViewListener {
     public static final int DEFAULT_VALUE = 0;
     public static final int CURRENT_INDEX = 0;
-    private WeatherUsecase usecase;
+
+    @Inject WeatherUsecase usecase;
     private ProgressUtils progressUtils;
 
     @BindView(R.id.txt_town) TextView txtTown;
@@ -28,9 +32,15 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
 
     @Override
+    protected void doInject(AppComponent component) {
+        component.inject(this);
+    }
+
+    @Override
     protected void onViewCreated() {
+        usecase.setListener(this);
+
         setToolBarAndUpNavigation();
-        this.usecase = new WeatherUsecase(this);
         this.progressUtils = new ProgressUtils();
 
         double lat = getIntent().getDoubleExtra(MainActivity.LAT, DEFAULT_VALUE);
