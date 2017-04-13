@@ -8,4 +8,8 @@
     <string name="current">Current:</string>
     <string name="max">Max:</string>
     <string name="description">Description:</string>
+    <string name="temp_format">%1$,.0f°C</string>
+    <string name="humidity_format">%1$,.0f%%</string>
+    <string name="pressure_format">%1$,.0f hPa</string>
+    <string name="speed_format">%1$,.0f km/h</string>
 </resources>

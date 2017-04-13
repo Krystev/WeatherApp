@@ -14,8 +14,13 @@ public class PermissionsUtils {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private Activity activity;
 
-    public void checkPermissions(Activity activity){
+    public PermissionsUtils(Activity activity){
+        this.activity = activity;
+    }
+
+    public void checkPermissions(){
         if(!hasPermissions(activity, PERMISSIONS)){
             ActivityCompat.requestPermissions(activity, PERMISSIONS, PERMISSION_ALL);
         }

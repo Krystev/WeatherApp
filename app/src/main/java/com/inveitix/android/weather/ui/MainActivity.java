@@ -27,8 +27,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     protected void onViewCreated() {
-        PermissionsUtils permissionsUtils = new PermissionsUtils();
-        permissionsUtils.checkPermissions(this);
+        PermissionsUtils permissionsUtils = new PermissionsUtils(this);
+        permissionsUtils.checkPermissions();
 
         setUpMap();
     }

@@ -9,6 +9,8 @@ import com.inveitix.android.weather.di.AppComponent;
 import com.inveitix.android.weather.usecases.WeatherUsecase;
 import com.inveitix.android.weather.utils.ProgressUtils;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -70,11 +72,15 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
         weatherIconView.setIconResource(
                 getString(weather.getWeather().get(CURRENT_INDEX).getFormattedIcon()));
         txtTown.setText(weather.getName());
-        txtCurrTemp.setText(String.format("%1$,.0f°C", weather.getMain().getTemp()));
-        txtHumidity.setText(String.format("%1$,.0f%%", weather.getMain().getHumidity()));
-        txtPressure.setText(String.format("%1$,.0f hPa", weather.getMain().getPressure()));
-        txtWindSpeed.setText(String.format("%1$,.0f km/h", weather.getWind().getSpeed()));
-        txtWindDirection.setText(String.format("%s", weather.getWind().getDirection()));
+        txtCurrTemp.setText(String.format(Locale.getDefault(), getString(R.string.temp_format),
+                weather.getMain().getTemp()));
+        txtHumidity.setText(String.format(Locale.getDefault(), getString(R.string.humidity_format),
+                        weather.getMain().getHumidity()));
+        txtPressure.setText(String.format(Locale.getDefault(), getString(R.string.pressure_format),
+                weather.getMain().getPressure()));
+        txtWindSpeed.setText(String.format(Locale.getDefault(), getString(R.string.speed_format),
+                weather.getWind().getSpeed()));
+        txtWindDirection.setText(weather.getWind().getDirection());
         txtWeatherType.setText(weather.getWeather().get(CURRENT_INDEX).getMain());
         txtWeatherDescription.setText(weather.getWeather().get(CURRENT_INDEX).getDescription());
     }

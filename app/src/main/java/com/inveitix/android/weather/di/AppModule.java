@@ -1,9 +1,5 @@
 package com.inveitix.android.weather.di;
 
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 
 import com.inveitix.android.weather.App;
@@ -41,11 +37,5 @@ public class AppModule {
     @Singleton
     public WeatherServiceRepository provideWeatherService () {
         return new WeatherServiceRepository();
-    }
-
-    @Provides
-    @Singleton
-    public BluetoothManager provideBluetoothManager(App app) {
-        return (BluetoothManager) app.getSystemService(Context.BLUETOOTH_SERVICE);
     }
 }

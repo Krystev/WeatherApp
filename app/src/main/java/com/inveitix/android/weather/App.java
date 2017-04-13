@@ -6,7 +6,6 @@ import android.content.Context;
 import com.inveitix.android.weather.di.AppComponent;
 import com.inveitix.android.weather.di.AppModule;
 import com.inveitix.android.weather.di.DaggerAppComponent;
-import com.inveitix.android.weather.ui.BaseActivity;
 
 public class App extends Application {
 

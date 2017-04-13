@@ -12,6 +12,7 @@
         android:id="@+id/txt_town"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dim_margin_small"
         android:text="Town name" />
@@ -137,6 +138,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/icon_weather"
         android:layout_centerHorizontal="true"
+        android:textColor="@android:color/black"
         android:layout_marginBottom="@dimen/dim_margin_small"
         android:text="Clouds" />
 
@@ -144,6 +146,7 @@
         android:id="@+id/txt_weather_description_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:layout_below="@+id/txt_weather_type"
         android:layout_marginLeft="@dimen/dim_margin_small"
         android:layout_marginTop="@dimen/dim_margin_small"
