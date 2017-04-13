@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 
+import com.inveitix.android.weather.App;
+import com.inveitix.android.weather.di.AppComponent;
+
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -16,10 +19,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        App.getAppComponent(this).inject(this);
+        doInject(App.getAppComponent(this));
+
         setContentView(getLayout());
         ButterKnife.bind(this);
         onViewCreated();
     }
+
+    protected abstract void doInject(AppComponent component);
 
     protected abstract void onViewCreated();
 

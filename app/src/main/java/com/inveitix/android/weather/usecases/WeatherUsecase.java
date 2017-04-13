@@ -8,26 +8,34 @@ import com.inveitix.android.weather.repositories.WeatherRepository;
 import com.inveitix.android.weather.utils.DegreesToDirectionUtils;
 import com.inveitix.android.weather.utils.IconParser;
 
+import javax.inject.Inject;
+
 public class WeatherUsecase {
+
+    private static final int CURRENT_INDEX = 0;
 
     private DegreesToDirectionUtils degToDirection;
     private ViewListener viewListener;
     private WeatherServiceRepository weatherService;
     private IconParser iconParser;
 
-    public WeatherUsecase(ViewListener viewListener) {
+    @Inject
+    WeatherUsecase(WeatherServiceRepository weatherService) {
         this.degToDirection = new DegreesToDirectionUtils();
         this.iconParser = new IconParser();
+        this.weatherService = weatherService;
+    }
+
+    public void setListener(ViewListener viewListener) {
         this.viewListener = viewListener;
-        this.weatherService = WeatherServiceRepository.getInstance();
     }
 
     public void onUiReady(double lat, double lon) {
-        viewListener.showProgress();
         getCurrentWeather(lat, lon);
     }
 
     private void getCurrentWeather(double lat, double lon) {
+        viewListener.showProgress();
         weatherService.getCurrentWeather(getWeatherReceivedListener(), lat, lon);
     }
 
@@ -44,8 +52,9 @@ public class WeatherUsecase {
     }
 
     private void formatData(WeatherResponse weather) {
-        int formattedIcon = iconParser.getFormattedIcon(weather.getWeather().get(0).getIcon());
-        weather.getWeather().get(0).setFormattedIcon(formattedIcon);
+        int formattedIcon =
+                iconParser.getFormattedIcon(weather.getWeather().get(CURRENT_INDEX).getIcon());
+        weather.getWeather().get(CURRENT_INDEX).setFormattedIcon(formattedIcon);
         weather.getWind().setDirection(
                 degToDirection.getDirectionByDeg(weather.getWind().getDeg()));
         weather.getMain().setTemp(convertKelvinToCel(weather.getMain().getTemp()));
@@ -58,11 +67,8 @@ public class WeatherUsecase {
     }
 
     public interface ViewListener {
-
         void showProgress();
-
         void hideProgress();
-
         void showWeather(WeatherResponse weather);
     }
 }

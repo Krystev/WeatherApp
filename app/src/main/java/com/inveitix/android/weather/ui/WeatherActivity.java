@@ -1,20 +1,30 @@
 package com.inveitix.android.weather.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.TextView;
 
 import com.github.pwittchen.weathericonview.WeatherIconView;
 import com.inveitix.android.weather.R;
 import com.inveitix.android.weather.data.models.WeatherResponse;
+import com.inveitix.android.weather.di.AppComponent;
 import com.inveitix.android.weather.usecases.WeatherUsecase;
 import com.inveitix.android.weather.utils.ProgressUtils;
+
+import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class WeatherActivity extends BaseActivity implements WeatherUsecase.ViewListener {
     public static final int DEFAULT_VALUE = 0;
     public static final int CURRENT_INDEX = 0;
-    private WeatherUsecase usecase;
-    private ProgressUtils progressUtils;
+    public static final String LAT = "lat";
+    public static final String LON = "lon";
+
+    @Inject WeatherUsecase usecase;
+    ProgressUtils progressUtils;
 
     @BindView(R.id.txt_town) TextView txtTown;
     @BindView(R.id.txt_current_temp) TextView txtCurrTemp;
@@ -28,13 +38,18 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
 
     @Override
-    protected void onViewCreated() {
-        setToolBarAndUpNavigation();
-        this.usecase = new WeatherUsecase(this);
-        this.progressUtils = new ProgressUtils();
+    protected void doInject(AppComponent component) {
+        component.inject(this);
+    }
 
-        double lat = getIntent().getDoubleExtra(MainActivity.LAT, DEFAULT_VALUE);
-        double lon = getIntent().getDoubleExtra(MainActivity.LON, DEFAULT_VALUE);
+    @Override
+    protected void onViewCreated() {
+        usecase.setListener(this);
+        progressUtils = new ProgressUtils(this);
+        setToolBarAndUpNavigation();
+
+        double lat = getIntent().getDoubleExtra(LAT, DEFAULT_VALUE);
+        double lon = getIntent().getDoubleExtra(LON, DEFAULT_VALUE);
 
         usecase.onUiReady(lat, lon);
     }
@@ -46,7 +61,7 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
 
     @Override
     public void showProgress() {
-        progressUtils.showProgress(this);
+        progressUtils.showProgress();
     }
 
     @Override
@@ -60,12 +75,23 @@ public class WeatherActivity extends BaseActivity implements WeatherUsecase.View
         weatherIconView.setIconResource(
                 getString(weather.getWeather().get(CURRENT_INDEX).getFormattedIcon()));
         txtTown.setText(weather.getName());
-        txtCurrTemp.setText(String.format("%1$,.0f°C", weather.getMain().getTemp()));
-        txtHumidity.setText(String.format("%1$,.0f%%", weather.getMain().getHumidity()));
-        txtPressure.setText(String.format("%1$,.0f hPa", weather.getMain().getPressure()));
-        txtWindSpeed.setText(String.format("%1$,.0f km/h", weather.getWind().getSpeed()));
-        txtWindDirection.setText(String.format("%s", weather.getWind().getDirection()));
+        txtCurrTemp.setText(String.format(Locale.getDefault(), getString(R.string.temp_format),
+                weather.getMain().getTemp()));
+        txtHumidity.setText(String.format(Locale.getDefault(), getString(R.string.humidity_format),
+                        weather.getMain().getHumidity()));
+        txtPressure.setText(String.format(Locale.getDefault(), getString(R.string.pressure_format),
+                weather.getMain().getPressure()));
+        txtWindSpeed.setText(String.format(Locale.getDefault(), getString(R.string.speed_format),
+                weather.getWind().getSpeed()));
+        txtWindDirection.setText(weather.getWind().getDirection());
         txtWeatherType.setText(weather.getWeather().get(CURRENT_INDEX).getMain());
         txtWeatherDescription.setText(weather.getWeather().get(CURRENT_INDEX).getDescription());
+    }
+
+    public static Intent getIntent(Context context, double latitude, double longitude) {
+        Intent weatherIntent = new Intent(context, WeatherActivity.class);
+        weatherIntent.putExtra(LAT, latitude);
+        weatherIntent.putExtra(LON, longitude);
+        return weatherIntent;
     }
 }

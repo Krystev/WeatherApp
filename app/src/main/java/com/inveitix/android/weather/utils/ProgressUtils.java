@@ -5,10 +5,19 @@ import android.content.Context;
 
 import com.inveitix.android.weather.R;
 
-public class ProgressUtils {
-    private ProgressDialog dialog;
+import javax.inject.Inject;
 
-    private void initProgress(Context context) {
+public class ProgressUtils {
+
+    private ProgressDialog dialog;
+    private Context context;
+
+    @Inject
+    public ProgressUtils(Context context) {
+        this.context = context;
+    }
+
+    private void initProgress() {
         dialog = new ProgressDialog(context);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         dialog.setMessage(context.getString(R.string.loading));
@@ -17,8 +26,8 @@ public class ProgressUtils {
         dialog.show();
     }
 
-    public void showProgress(Context context){
-        initProgress(context);
+    public void showProgress(){
+        initProgress();
     }
 
     public void hideProgress() {
