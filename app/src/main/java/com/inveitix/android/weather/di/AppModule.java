@@ -1,5 +1,6 @@
 package com.inveitix.android.weather.di;
 
+import android.location.LocationManager;
 import android.view.LayoutInflater;
 
 import com.inveitix.android.weather.App;
@@ -12,6 +13,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
+import static android.content.Context.LOCATION_SERVICE;
 
 @Module
 public class AppModule {
@@ -43,5 +46,9 @@ public class AppModule {
     @Singleton
     WeatherServiceRepository provideWeatherService() {
         return new WeatherServiceRepository();
+    }
+
+    @Provides @Singleton LocationManager provideLocationManager() {
+        return (LocationManager) app.getSystemService(LOCATION_SERVICE);
     }
 }

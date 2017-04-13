@@ -1,5 +1,9 @@
 package com.inveitix.android.weather.ui;
 
+import android.location.Location;
+import android.location.LocationManager;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -18,6 +22,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     private GoogleMap map;
     @Inject MapUsecase usecase;
+    @Inject LocationManager locationManager;
 
     @Override
     protected void doInject(AppComponent component) {
@@ -56,6 +61,14 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
+        setCurrentLocation();
+    }
+
+    @SuppressWarnings("MissingPermission")
+    private void setCurrentLocation() {
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        map.moveCamera(CameraUpdateFactory.newLatLng(
+                new LatLng(location.getLatitude(), location.getLongitude())));
     }
 
     @OnClick(R.id.btn_choose)
