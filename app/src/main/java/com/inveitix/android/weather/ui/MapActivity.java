@@ -65,7 +65,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
 
     @OnClick(R.id.btn_choose)
     public void chooseLocation(){
-        usecase.showWeather(getLocationUnderX().latitude, getLocationUnderX().longitude);
+        usecase.setLocation(getLocationUnderX().latitude, getLocationUnderX().longitude);
     }
 
     private Intent getWeatherIntent(double latitude, double longitude) {
