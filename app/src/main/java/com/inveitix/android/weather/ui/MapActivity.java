@@ -67,8 +67,10 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     @SuppressWarnings("MissingPermission")
     private void setCurrentLocation() {
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        map.moveCamera(CameraUpdateFactory.newLatLng(
-                new LatLng(location.getLatitude(), location.getLongitude())));
+        if(location != null){
+            map.moveCamera(CameraUpdateFactory.newLatLng(
+                    new LatLng(location.getLatitude(), location.getLongitude())));
+        }
     }
 
     @OnClick(R.id.btn_choose)
