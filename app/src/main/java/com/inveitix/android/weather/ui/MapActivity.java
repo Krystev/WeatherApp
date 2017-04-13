@@ -43,7 +43,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Map
     }
 
     @Override
-    public void showWeather() {
+    public void onLocationSelected() {
         openWeatherActivity();
     }
 

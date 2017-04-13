@@ -16,7 +16,7 @@ public class MapUsecase {
     }
 
     public void showWeather(){
-        viewListener.showWeather();
+        viewListener.onLocationSelected();
     }
 
     public void setListener(ViewListener viewListener) {
@@ -25,7 +25,7 @@ public class MapUsecase {
 
     public interface ViewListener {
         void setUpMap();
-        void showWeather();
+        void onLocationSelected();
         void checkPermissions();
     }
 }
